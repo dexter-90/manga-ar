@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+src/manga_dl4/MangaDL4.py
+src/manga_dl4/__init__.py
+src/manga_dl4/utility.py
+src/manga_dl4.egg-info/PKG-INFO
+src/manga_dl4.egg-info/SOURCES.txt
+src/manga_dl4.egg-info/dependency_links.txt
+src/manga_dl4.egg-info/requires.txt
+src/manga_dl4.egg-info/top_level.txt
