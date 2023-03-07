@@ -8,7 +8,7 @@
 pip3 install manga-dl0
 ```
 
-### How to use:
+### To use:
 ```bash
 from manga_dl0 import MangaDL
 
