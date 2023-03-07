@@ -286,7 +286,5 @@ class Utility:
         with open(f"{name}.pdf", 'wb') as file:
             file.write(img2pdf.convert(images))
             file.close()
-
-
-obj = MangaDL(name="attack on titan no requiem", start=1, end=2)
-obj.DownloadChapters()
+            
+# ابجد هوز حطي كلمن سعفص قرشت
