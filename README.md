@@ -37,3 +37,5 @@ LastChapter = obj.LastChapter()  # Get Last Chapter In Manga From 3asq
 obj = MangaDL(url="https://3asq.org/manga/jujutsu-kaisen/", start=1, end=2)
 obj.DownloadChapters()
 ```
+
+***ملاحظة لست مسؤولا عما تفعله بهذه المكتبة وما تقوم بتنزيله منها، ولا أسامح من يحمل مانجا إباحية أو مانجا غير أخلاقية***
