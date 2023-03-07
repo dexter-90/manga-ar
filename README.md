@@ -1,7 +1,7 @@
 # manga-dl4
 
-- ***Developer => Dexter***
-- **if you like it give me ⭐️**
+- ***Developer => TheGreatDexter***
+- **If You Like It Give Me A Star**
 - **You Have A Error > Text Me On Telegram (rar_99)**
 
 ### To install:
