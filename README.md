@@ -1,7 +1,7 @@
 # manga-dl0
 
 - **Developer =>** ***Dexter***
-- **If You Like It Give Me A Star**
+- **Give Me A Star If You Like It**
 - **You Have A Error > Text Me On Telegram (rar_99)**
 
 ### To install:
