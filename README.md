@@ -13,7 +13,7 @@ pip3 install manga-dl0
 from manga_dl0 import MangaDL
 
 # Name Or URL (we recommend url)
-obj = MangaDL(name='attack on titan no requiem', url="https://3asq.org/manga/attack-on-titan-no-requiem/")
+obj = MangaDL(name='jujutsu kaisen', url="https://3asq.org/manga/jujutsu-kaisen/")
 
 obj.DownloadManga()  # Download All Manga Chapter From 3asq
 info = obj.Info()  # Get Manga Info From 3asq
@@ -32,6 +32,6 @@ LastChapter = obj.LastChapter()  # Get Last Chapter In Manga From 3asq
 # Mean => Download "Attack On Titan" Manga From Chapter 1 To Chapter 2
 # Note => It will download the first chapter on the site (the existing), not the real first chapter
 
-obj = MangaDL(url="https://3asq.org/manga/attack-on-titan-no-requiem/", start=1, end=2)
+obj = MangaDL(url="https://3asq.org/manga/jujutsu-kaisen/", start=1, end=2)
 obj.DownloadChapters()
 ```
