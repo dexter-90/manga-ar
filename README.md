@@ -1,6 +1,6 @@
 # manga-dl0
 
-- ***Developer => TheGreatDexter***
+- **Developer =>** ***Dexter***
 - **If You Like It Give Me A Star**
 - **You Have A Error > Text Me On Telegram (rar_99)**
 
