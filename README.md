@@ -1,8 +1,9 @@
 # manga-dl0
 
 - **Developer =>** ***Dexter***
+- **You Have An Error => Text Me On Telegram (rar_99)**
 - **Give Me A Star If You Like It**
-- **You Have A Error > Text Me On Telegram (rar_99)**
+
 
 ### How to use:
 ```bash
