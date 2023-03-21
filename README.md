@@ -4,7 +4,7 @@
 - **Give Me A Star If You Like It**
 - **You Have A Error > Text Me On Telegram (rar_99)**
 
-### To use:
+### How to use:
 ```bash
 from manga_dl0 import MangaDL
 
