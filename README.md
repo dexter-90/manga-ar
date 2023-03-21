@@ -2,7 +2,7 @@
 
 - **Developer =>** ***Dexter***
 - **You Have An Error => Text Me On Telegram (rar_99)**
-- **Give Me A Star If You Like It**
+- **Like It => Give Me A Star**
 
 
 ### How to use:
