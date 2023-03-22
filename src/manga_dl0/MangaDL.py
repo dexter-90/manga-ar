@@ -6,9 +6,13 @@ Library's:
 """
 
 import requests
-import img2pdf
 from bs4 import BeautifulSoup
+from PIL import Image
 
+try:
+    import img2pdf
+except:
+    pass
 
 class MangaDL:
 
@@ -35,7 +39,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -56,7 +60,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -75,7 +79,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -97,7 +101,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -116,7 +120,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -135,7 +139,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
@@ -184,7 +188,7 @@ class MangaDL:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
                     self.url = Utility.Search3(self.name)
-                    if self.url is None:
+                    if self.name is None:
                         raise NameError(f"name \"{self.name}\" is not found")
 
         else:
@@ -207,9 +211,12 @@ class MangaDL:
             except:
                 print("[+] Convert Image To PDF..")
                 a = self.url.split("/")
-                num = a[5]
-                manga = a[4]
-                Utility.ConvertPDF(images, f"@{manga}{num}")
+                a = a[5]
+                name = f"@{a[4]}{a[5]}"
+                try:
+                    Utility.ConvertPDF(images, name)
+                except:
+                    Utility.ConvertPDF2(images, name)
                 print("[+] Images Converted !")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
@@ -225,9 +232,7 @@ class MangaDL:
             if self.url is None:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
-                    self.url = Utility.Search3(self.name)
-                    if self.url is None:
-                        raise NameError(f"name \"{self.name}\" is not found")
+                    raise NameError(f"name \"{self.name}\" is not found")
 
         chapters = Utility.Chapters(url=self.url)
 
@@ -262,7 +267,12 @@ class MangaDL:
                 print("[+] Convert Image To PDF..")
                 a = self.url.split("/")
                 num = a[5]
-                Utility.ConvertPDF(images, f"@{a[4]}{a[5]}")
+                name = f"@{a[4]}{a[5]}"
+                try:
+                    Utility.ConvertPDF(images, name)
+                except:
+                    Utility.ConvertPDF2(images, name)
+
                 print("[+] Images Converted Successfully ! \n\n")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
@@ -303,7 +313,7 @@ class MangaDL:
             try:
                 chapter = Utility.Chapters(url=str(Utility.Search(self.name)[0]['url']))[-1]
             except IndexError:
-                raise NameError(f"name \"{self.name}\" is not found")f
+                raise NameError(f"name \"{self.name}\" is not found")
 
         else:
             chapter = Utility.Chapters(url=self.url)[-1]
@@ -380,6 +390,8 @@ class Utility:
         return manga
 
     def Search2(name: str):
+        """Search Manga Name On 3asq And Return All Result In List (2)"""
+
         params = {
             's': name,
             'post_type': 'wp-manga',
@@ -398,6 +410,9 @@ class Utility:
         return soup
 
     def Search3(name: str):
+
+        """Search Manga Name On 3asq And Return All Result In List (3)"""
+
         response = requests.get(f"https://3asq.org/manga/{name.replace(' ', '-')}")
         return response.url if response.status_code != 404 else None
 
@@ -408,4 +423,10 @@ class Utility:
             file.write(img2pdf.convert(images))
             file.close()
 
+    def ConvertPDF2(images: list, name: str):
+        """Convert Image List To PDF (2)"""
 
+        images = [
+            Image.open(f).convert('RGB')
+            for f in images]
+        images[0].save(name, save_all=True, append_images=images[1:])
