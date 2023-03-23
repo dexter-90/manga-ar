@@ -1,0 +1,1 @@
+from .MangaDL import MangaDL
