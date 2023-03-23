@@ -1,4 +1,0 @@
-requests
-bs4
-beautifulsoup4
-img2pdf
