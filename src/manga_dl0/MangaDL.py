@@ -2,7 +2,7 @@
 Library's:
 1. requests => Get and Post Method (HTTP/1.1 Request)
 2. bs4 => BeautifulSoup (Scraping 3asq Site)
-3. img2pdf => Convert (Convert Image To PDF)
+3. PIL => Convert (Convert Image To PDF)
 """
 
 import requests
@@ -49,7 +49,7 @@ class MangaDL:
 
     def Rating(self):
         """Get Manga Rating From 3asq"""
-        
+
         if self.name is None and self.url is None:
             raise Exception('"name" Or "url" Parameter Not Found')
 
@@ -150,7 +150,7 @@ class MangaDL:
         return {"Title:": f"{self.url.split('/')[4]}", "Year": year}
 
     def Info(self):
-        """Get Manga Info 
+        """Get Manga Info
         (Cover, Categories, Synonyms, Status, year, rating, Title.)"""
 
         if self.name is None and self.url is None:
@@ -207,7 +207,15 @@ class MangaDL:
             print("[+] Images Downloaded Successfully !")
             try:
                 print("[+] Convert Image To PDF..")
-                Utility.ConvertPDF(images, f"@{str(self.name).title()}{chapter}")
+                name = f"@{str(self.name).title()}{chapter}"
+                try:
+                    Utility.ConvertPDF(images, name)
+                except:
+                    try:
+                        Utility.ConvertPDF2(images, name)
+                    except:
+                        raise Exception("Error With Convert To PDF !")
+                    
                 print("[+] Images Converted Successfully")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
             except:
@@ -223,7 +231,7 @@ class MangaDL:
                         Utility.ConvertPDF2(images, name)
                     except:
                         raise Exception("Error With Convert To PDF !")
-                    
+
                 print("[+] Images Converted !")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
@@ -239,14 +247,16 @@ class MangaDL:
             if self.url is None:
                 self.url = Utility.Search2(self.name)
                 if self.url is None:
-                    raise NameError(f"name \"{self.name}\" is not found")
+                    self.url = Utility.Search3(self.name)
+                    if self.url is None:
+                        raise NameError(f"name \"{self.name}\" is not found")
 
         chapters = Utility.Chapters(url=self.url)
 
         try:
             a = chapters[self.start - 1:self.end]
         except IndexError:
-            raise Exception("Chapters Index Error")
+            raise IndexError("Chapters Index Error")
 
         if not a:
             if self.name is not None:
@@ -266,7 +276,12 @@ class MangaDL:
 
             try:
                 print("[+] Convert Image To PDF..")
-                Utility.ConvertPDF(images, f"@{str(self.name).title()}{num}")
+                name = f"@{str(self.name).title()}{num}"
+                try:
+                    Utility.ConvertPDF(images, name)
+                except:
+                    Utility.ConvertPDF2(images, name)
+
                 print("[+] Images Converted Successfully")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
@@ -275,7 +290,7 @@ class MangaDL:
                 a = self.url.split("/")
                 num = a[5]
                 name = f"@{a[4]}{a[5]}"
-                
+
                 try:
                     Utility.ConvertPDF(images, name)
                 except:
@@ -283,7 +298,7 @@ class MangaDL:
                         Utility.ConvertPDF2(images, name)
                     except:
                         raise Exception("Error With Convert To PDF !")
-                    
+
                 print("[+] Images Converted Successfully ! \n\n")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
@@ -429,7 +444,7 @@ class Utility:
 
     def ConvertPDF(images: list, name: str):
         """Convert Image List To PDF (1)"""
-        
+
         with open(name + ".pdf", "wb") as pdf:
             pdf.write(img2pdf.convert(images))
 
