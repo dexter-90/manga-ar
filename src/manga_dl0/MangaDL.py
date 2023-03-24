@@ -417,4 +417,3 @@ class Utility:
         images2[0].save(name + ".pdf", save_all=True, append_images=images2[1:])
 
 
-print(MangaDL(name="berserk").LastChapter())
