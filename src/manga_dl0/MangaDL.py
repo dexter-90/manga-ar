@@ -5,143 +5,96 @@ Library's:
 3. PIL => Convert (Convert Image To PDF)
 """
 
+import requestas
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
+import logging
 
 try:
     import img2pdf
 except:
     pass
 
+logging.basicConfig()
+logging.getLogger().setLevel(logging.DEBUG)
 
-class MangaDL:
+
+
+class DL3asq:
 
     def __init__(self, name: str = None, url: str = None, start: int = None, end: int = None):
 
-        if url is not None and "https" not in url and '3asq.org' not in url:
-            raise ValueError(
-                "Enter A 3asq Link Not A Name Or Other Sites Link ! \nExample: https://3asq.org/manga/bleach/")
+        if url is not None and "https" not in url:
+            if '3asq.org' not in url:
+                raise ValueError(
+                    "Enter A 3asq Link Not A Name Or Other Sites Link ! \nExample: https://3asq.org/manga/bleach/")
+            raise ValueError("Enter A 3asq Link Start With HTTPS !")
 
-        self.name = name
-        self.url = url
+        if url is None:
+            self.url = str(Utility.Search(name=name))
+        else:
+            self.url = str(url)
+
+        self.name = self.url.split('/')[4]
         self.start = start
         self.end = end
+        self.info = Utility.Info(url=self.url)
+        Utility.Check(self.Categories)
 
+    @property
     def Cover(self):
         """Get Manga Cover URL From 3asq"""
 
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+        return {"Title": self.name.title(), "Cover": self.info["Cover"]}
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        cover = soup.find_all('img', {'class': "img-responsive"})[1]['src'].strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Cover": cover}
-
+    @property
     def Rating(self):
         """Get Manga Rating From 3asq"""
 
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+        return {"Title": self.name.title(), "Rating": self.info["Rating"]}
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        rating = soup.find('div', {"class": "summary-content vote-details"}).text.strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Rating": rating}
-
+    @property
     def Status(self):
         """Get Manga Status From 3asq"""
 
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+        return {"Title": self.name.title(), "Status": self.info["Status"]}
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        status = soup.find_all('div', {"class": "summary-content"})[-1].text.strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Status": status}
-
+    @property
     def Synonyms(self):
         """Get Manga Synonyms From 3asq"""
 
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+        return {"Title": self.name.title(), "Synonyms": self.info["Synonyms"]}
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        synonyms = soup.find_all('div', {"class": "summary-content"})[2].text.strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Synonyms": synonyms}
-
+    @property
     def Categories(self):
-
         """Get Manga Categories From 3asq"""
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
+        return {"Title": self.name.title(), "Categories": self.info["Categories"]}
 
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        categories = soup.find('div', {"class": "genres-content"}).text.strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "categories": categories}
-
+    @property
     def Year(self):
         """Get Manga Year From 3asq"""
 
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+        return {"Title": self.name.title(), "Year": self.info["Year"]}
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
+    @property
+    def FirstChapter(self):
+        """Get First Chapter In Manga From 3asq"""
 
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
+        return {"Title": self.name.title(), "Last-Chapter": self.info["First-Chapter"]}
 
-        year = soup.find_all('div', {"class": "summary-content"})[-2].text.strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Year": year}
-
-    def Info(self):
-        """Get Manga Info
-        (Cover, Categories, Synonyms, Status, year, rating, Title.)"""
+    @property
+    def LastChapter(self):
+        """Get Last Chapter In Manga From 3asq"""
 
         if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
+            raise Exception('"name" Or "url" Parameter Not Found')
 
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
-        soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
-
-        summary_content = soup.find_all('div', {"class": "summary-content"})
-        year = summary_content[-2].text.strip()
-        synonyms = summary_content[2].text.strip()
-        status = summary_content[-1].text.strip()
-        categories = soup.find('div', {"class": "genres-content"}).text.strip()
-        rating = soup.find('div', {"class": "summary-content vote-details"}).text.strip()
-        cover = soup.find_all('img', {'class': "img-responsive"})[1]['src'].strip()
-        return {"Title:": f"{self.url.split('/')[4]}", "Year": year, "Rating": rating, "Categories": categories,
-                "Synonyms": synonyms, "Status": status, "Cover": cover}
+        return {"Title": self.name, "Last-Chapter": self.info["Last-Chapter"]}
 
     def DownloadManga(self):
         """Download All Manga Chapters From 3asq"""
-
-        if self.name is None and self.url is None:
-            raise ValueError('"name" Or "url" Parameter Not Found')
-
-        if self.url is None:
-            self.url = Utility.Search(self.name)
 
         chapters = Utility.Chapters(url=self.url)
 
@@ -159,7 +112,7 @@ class MangaDL:
                 name = f"@{str(self.name).title()}{chapter}"
                 try:
                     Utility.ConvertPDF(images, name)
-                except:
+                except NameError:
                     try:
                         Utility.ConvertPDF2(images, name)
                     except:
@@ -175,7 +128,7 @@ class MangaDL:
 
                 try:
                     Utility.ConvertPDF(images, name)
-                except:
+                except NameError:
                     try:
                         Utility.ConvertPDF2(images, name)
                     except:
@@ -187,13 +140,6 @@ class MangaDL:
     def DownloadChapters(self):
         """Download Custom Manga Chapter From 3asq"""
 
-        global chapters
-        if self.start is None or self.end is None:
-            raise ValueError('"Start" Or "End" Parameter Not Found')
-
-        if self.url is None:
-            self.url = Utility.Search(self.name)
-
         chapters = Utility.Chapters(url=self.url)
 
         try:
@@ -202,12 +148,7 @@ class MangaDL:
             raise IndexError("Chapters Index Error")
 
         if not a:
-            if self.name is not None:
-                chapters = Utility.Chapters(name=Utility.Search(name=self.name))
-                a = chapters[self.start - 1:self.end]
-
-            if self.url is not None:
-                raise ValueError(f"Manga \"{self.url}\" Is Not Found")
+            raise ValueError(f"Manga \"{self.url}\" Is Not Found")
 
         for chapter in a:
             num = str(chapter).split('/')[5]
@@ -231,21 +172,21 @@ class MangaDL:
             except:
                 print("[+] Convert Image To PDF..")
                 a = self.url.split("/")
-                num = a[5]
                 name = f"@{a[4]}{a[5]}"
 
                 try:
                     Utility.ConvertPDF(images, name)
-                except:
+                except NameError:
                     try:
                         Utility.ConvertPDF2(images, name)
                     except:
                         raise Exception("Error With Convert To PDF !")
 
                 print("[+] Images Converted Successfully ! \n\n")
-                print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
+                print(f"[+] Chapter {a[5]} Downloaded Successfully.\n\n")
 
-    def LastUpdates(self):
+    @staticmethod
+    def LastUpdates():
         """Get Last Updates From 3asq"""
 
         soup = BeautifulSoup(requests.get('https://3asq.org/').text, 'html.parser')
@@ -257,59 +198,25 @@ class MangaDL:
             result[i] = j
         return result
 
-    def FirstChapter(self):
-        """Get First Chapter In Manga From 3asq"""
-
-        if self.name is None and self.url is None:
-            raise Exception('"name" Or "url" Parameter Not Found')
-
-        if self.url is None:
-            try:
-                chapter = Utility.Chapters(url=Utility.Search(self.name))[0]
-            except IndexError:
-                raise NameError(f"name \"{self.name}\" is not found")
-
-        else:
-            chapter = Utility.Chapters(url=self.url)[0]
-
-        return {"Title": self.name, "First-Chapter": chapter}
-
-    def LastChapter(self):
-        """Get Last Chapter In Manga From 3asq"""
-
-        if self.url is None:
-            try:
-                chapter = Utility.Chapters(url=str(Utility.Search(self.name)))[-1]
-            except IndexError:
-                raise NameError(f"name \"{self.name}\" is not found")
-
-        else:
-            chapter = Utility.Chapters(url=self.url)[-1]
-
-        return {"Title": self.name, "Last-Chapter": chapter}
-
 
 class Utility:
 
     @staticmethod
     def Chapters(url: str = None, name: str = None):
         """Get All Existing Chapters URL"""
-        global manga_name
-        if url == "None":
 
+        if url == "None":
             link = 'https://3asq.org/manga/' + name + '/ajax/chapters/'
-            ref = 'https://3asq.org/manga/' + name + '/'
 
         else:
-            manga_name = str(url.split('/')[4])
-            link = 'https://3asq.org/manga/' + manga_name + '/ajax/chapters/'
-            ref = 'https://3asq.org/manga/' + manga_name + '/'
+            name = str(url.split('/')[4])
+            link = 'https://3asq.org/manga/' + name + '/ajax/chapters/'
 
         r = requests.post(link, headers={
             'accept': '*/*',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'origin': 'https://3asq.org',
-            'referer': ref,
+            'referer': 'https://3asq.org/manga/' + name + '/',
             'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
             (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
         })
@@ -336,7 +243,7 @@ class Utility:
         """Search Manga Name On 3asq And Return All Result In List"""
 
         if name.startswith("http"):
-            raise ValueError("Enter A Manga Name Not URL")
+            raise ValueError("Enter A Name In The Name Parameter, Not A Link")
 
         name = name.replace(' ', '+')
 
@@ -397,7 +304,7 @@ class Utility:
             if url is None:
                 url = Utility.Search3(name)
                 if url is None:
-                    raise NameError(f"name \"{name}\" is not found")
+                    raise NameError(f"Name \"{name}\" is not found")
         return url
 
     @staticmethod
@@ -416,4 +323,32 @@ class Utility:
             for f in images]
         images2[0].save(name + ".pdf", save_all=True, append_images=images2[1:])
 
+    @staticmethod
+    def Info(url):
+        """Get Manga Info
+        (Cover, Categories, Synonyms, Status, year, rating, Title.)"""
+
+        soup = BeautifulSoup(requests.get(url).text, 'html.parser')
+
+        summary_content = soup.find_all('div', {"class": "summary-content"})
+        year = summary_content[-2].text.strip()
+        synonyms = summary_content[2].text.strip()
+        status = summary_content[-1].text.strip()
+        categories = soup.find('div', {"class": "genres-content"}).text.strip().split(",")
+        rating = soup.find('div', {"class": "summary-content vote-details"}).text.strip()
+        cover = soup.find_all('img', {'class': "img-responsive"})[1]['src'].strip()
+        chapters = Utility.Chapters(url=url)
+        return {"Title:": f"{url.split('/')[4]}", "Year": year, "Rating": rating, "Categories": categories,
+                "Synonyms": synonyms, "Status": status, "Cover": cover, "First-Chapter": chapters[0],
+                "Last-Chapter": chapters[-1]}
+
+    @staticmethod
+    def Check(categories):
+        """Check If The Manga Unethical"""
+        if "حريم" in categories or "إيتشي" in categories['Categories']:
+            raise Exception("Sorry We Can't Help You, Because Your Manga Is An Unethical.")
+
+
+obj = MangaDL(name="piece")
+print(obj.url)
 
