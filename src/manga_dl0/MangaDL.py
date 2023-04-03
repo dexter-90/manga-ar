@@ -348,7 +348,3 @@ class Utility:
         if "حريم" in categories or "إيتشي" in categories['Categories']:
             raise Exception("Sorry We Can't Help You, Because Your Manga Is An Unethical.")
 
-
-obj = MangaDL(name="piece")
-print(obj.url)
-
