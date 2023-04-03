@@ -9,15 +9,11 @@ import requestas
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-import logging
 
 try:
     import img2pdf
 except:
     pass
-
-logging.basicConfig()
-logging.getLogger().setLevel(logging.DEBUG)
 
 
 
