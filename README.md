@@ -1,4 +1,4 @@
-"# 🦉 manga-ar
+# 🦉 manga-ar
 
 > This Is A Python Library That Allows You To Interact With 3asq
 
