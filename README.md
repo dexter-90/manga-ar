@@ -3,7 +3,7 @@
 > This Is A Python Library That Allows You To Interact With 3asq
 
 ## ⚙ Installation :
-[![Total Downloads](https://static.pepy.tech/personalized-badge/pyanime4up?period=total&units=none&left_color=black&right_color=blue&left_text=Total-Downloads)](https://pepy.tech/project/manga-dl0)
+[![Total Downloads](https://static.pepy.tech/personalized-badge/manga-dl0?period=total&units=none&left_color=black&right_color=blue&left_text=Total-Downloads)](https://pepy.tech/project/manga-dl0)
 ```bash
 pip3 install manga-dl0
 ```
@@ -38,4 +38,5 @@ obj.DownloadChapters()
 ## 🪐 Credits:
 * [Dexter](https://github.com/dexter-90) For [Manga-dl0](https://github.com/dexter-90/manga-dl0)
 
-## ملاحظة لست مسؤولا عما تفعله بهذه المكتبة وما تقوم بتنزيله منها ولا أسامح من يحمل مانجا إباحية أو مانجا غير أخلاقية
+# 
+ملاحظة لست مسؤولا عما تفعله بهذه المكتبة وما تقوم بتنزيله منها ولا أسامح من يحمل مانجا إباحية أو مانجا غير أخلاقية *
