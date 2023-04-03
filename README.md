@@ -1,16 +1,15 @@
-# manga-dl0
+# 🦉 manga-dl0
 
-- **Developer =>** ***Dexter***
-- **You Have An Error => Text Me On Telegram (rar_99)**
-- **If You Like It => Give Me A Star**
+> This Is A Python Library That Allows You To Interact With 3asq
 
-### How to install:
+## ⚙ Installation :
+[![Total Downloads](https://static.pepy.tech/personalized-badge/pyanime4up?period=total&units=none&left_color=black&right_color=blue&left_text=Total-Downloads)](https://pepy.tech/project/manga-dl0)
 ```bash
 pip3 install manga-dl0
 ```
 
-### How to use:
-```bash
+## ❓ Usage :
+```python
 from manga_dl0 import MangaDL
 
 # Name Or URL (we recommend url)
@@ -36,5 +35,7 @@ LastChapter = obj.LastChapter()  # Get Last Chapter In Manga From 3asq
 obj = MangaDL(url="https://3asq.org/manga/jujutsu-kaisen/", start=1, end=2)
 obj.DownloadChapters()
 ```
+## 🪐 Credits:
+* [Dexter](https://github.com/dexter-90) For [manga-dl0](https://github.com/dexter-90/manga-dl0)
 
 ***ملاحظة لست مسؤولا عما تفعله بهذه المكتبة وما تقوم بتنزيله منها ولا أسامح من يحمل مانجا إباحية أو مانجا غير أخلاقية***
