@@ -1,6 +1,6 @@
 # 🦉 manga-dl0
 
-> This Is A Python Library That Allows You To Interact With 3asq
+>  Python packag That Allows You To Interact With 3asq (0.0.6)
 
 ## ⚙ Installation :
 [![Total Downloads](https://static.pepy.tech/personalized-badge/manga-dl0?period=total&units=none&left_color=black&right_color=blue&left_text=Total-Downloads)](https://pepy.tech/project/manga-dl0)
