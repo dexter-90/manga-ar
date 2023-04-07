@@ -96,15 +96,16 @@ class MangaDL:
         print("[$] Download..")
         for chapter in chapters:
             images = [img for img in Utility.Images(chapter)]
-            num = {str(chapter).split('/')[5]}
+            num = str(chapter).split('/')[5]
 
             print(f"[+] Found {len(images)} Image For Chapter {num}")
 
             images = [requests.get(img).content for img in images]
             print("[+] Images Downloaded Successfully !")
+            print("[+] Convert Image To PDF..")
+
             try:
-                print("[+] Convert Image To PDF..")
-                name = f"@{str(self.name).title()}{chapter}"
+                name = f"@{str(self.name).title()}" + num
                 try:
                     Utility.ConvertPDF(images, name)
                 except NameError:
@@ -113,12 +114,10 @@ class MangaDL:
                     except:
                         raise Exception("Error With Convert To PDF !")
 
-                print("[+] Images Converted Successfully")
+                print("[+] Images Converted Successfully !")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
-            except:
-                print("[+] Convert Image To PDF..")
-                a = self.url.split("/")
-                a = a[5]
+            except Exception:
+                a = chapter.split("/")
                 name = f"@{a[4]}{a[5]}"
 
                 try:
@@ -129,7 +128,7 @@ class MangaDL:
                     except:
                         raise Exception("Error With Convert To PDF !")
 
-                print("[+] Images Converted !")
+                print("[+] Images Converted Successfully !")
                 print(f"[+] Chapter {num} Downloaded Successfully.\n\n")
 
     def DownloadChapters(self):
@@ -342,4 +341,3 @@ class Utility:
         """Check If The Manga Unethical"""
         if "حريم" in categories or "إيتشي" in categories['Categories']:
             raise Exception("Sorry We Can't Help You, Because Your Manga Is An Unethical.")
-
