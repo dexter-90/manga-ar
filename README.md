@@ -28,7 +28,7 @@ First_Chapter = obj.FirstChapter  # Get Last Chapter In Manga From 3asq
 Last_Chapter = obj.LastChapter  # Get Last Chapter In Manga From 3asq
 
 # Download Custom Chapters From 3asq
-# Name Or URL, Start And URL
+# Name Or URL, Start And End
 # Mean => Download "Attack On Titan" Manga From Chapter 1 To Chapter 2
 # Note => It will download the first chapter on the site (the existing), not the real first chapter
 
